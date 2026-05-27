@@ -1,10 +1,13 @@
-import { createClient } from '@/lib/supabase/server';
-import { Sidebar } from '@/components/sidebar';
-import Link from 'next/link';
-import { redirect } from 'next/navigation';
-import type { Database } from '@/types/database';
+import { createClient } from "@/lib/supabase/server";
+import { Sidebar } from "@/components/sidebar";
+import Link from "next/link";
+import { redirect } from "next/navigation";
+import type { Database } from "@/types/database";
 
-type PageSummary = Pick<Database['public']['Tables']['pages']['Row'], 'id' | 'title' | 'updated_at'>;
+type PageSummary = Pick<
+  Database["public"]["Tables"]["pages"]["Row"],
+  "id" | "title" | "updated_at"
+>;
 
 export default async function Dashboard() {
   const supabase = await createClient();
@@ -12,13 +15,13 @@ export default async function Dashboard() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) redirect('/login');
+  if (!user) redirect("/login");
 
   const { data: pagesData } = await supabase
-    .from('pages')
-    .select('id,title,updated_at')
-    .eq('user_id', user.id)
-    .order('updated_at', { ascending: false })
+    .from("pages")
+    .select("id,title,updated_at")
+    .eq("user_id", user.id)
+    .order("updated_at", { ascending: false })
     .limit(20);
 
   const pages = (pagesData ?? []) as PageSummary[];
@@ -30,7 +33,7 @@ export default async function Dashboard() {
         <h1 className="text-2xl font-semibold">Dashboard</h1>
         <form
           action={async () => {
-            'use server';
+            "use server";
 
             const s = await createClient();
             const {
@@ -39,12 +42,15 @@ export default async function Dashboard() {
 
             if (!user) return;
 
-            const newPage: Database['public']['Tables']['pages']['Insert'] = {
+            const newPage: Database["public"]["Tables"]["pages"]["Insert"] = {
               user_id: user.id,
-              title: 'Untitled',
+              title: "Untitled",
             };
 
-            const { data } = await (s.from('pages') as any).insert(newPage).select('id').single();
+            const { data } = await (s.from("pages") as any)
+              .insert(newPage)
+              .select("id")
+              .single();
 
             if (data) redirect(`/page/${data.id}`);
           }}
