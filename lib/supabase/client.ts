@@ -7,5 +7,5 @@ const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
 export const createClient = () => {
   console.log("keys, ", supabaseUrl, supabaseKey);
-  createBrowserClient<Database>(supabaseUrl!, supabaseKey!);
+  return createBrowserClient<Database>(supabaseUrl!, supabaseKey!);
 };

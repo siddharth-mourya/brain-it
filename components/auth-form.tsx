@@ -12,11 +12,11 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
     e.preventDefault();
     setLoading(true);
     const supabase = createClient();
-    const fn =
+    console.log("supabase client, ", supabase);
+    const { error } =
       mode === "login"
-        ? supabase.auth.signInWithPassword
-        : supabase.auth.signUp;
-    const { error } = await fn({ email, password });
+        ? await supabase.auth.signInWithPassword({ email, password })
+        : await supabase.auth.signUp({ email, password });
     setLoading(false);
     if (error) return toast.error(error.message);
     toast.success(mode === "login" ? "Welcome back!" : "Account created");
