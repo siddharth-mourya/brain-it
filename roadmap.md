@@ -208,3 +208,30 @@ Test these modules without hardware where possible:
 - OTA implementation details.
 - Backend API contract for registration, config sync, and connected bots.
 - Enclosure and mechanical constraints.
+
+## Firmware implementation status
+
+The repository now includes a first PlatformIO/Arduino firmware implementation for the ESP32-C3 target described in these documents.
+
+Implemented V1 foundations:
+
+- Event bus with queued dispatch and subscriber callbacks.
+- State machine for boot, pairing, idle, sleepy, excited, error, and OTA states.
+- Mood engine with happiness, energy, excitement, boredom, and attention variables.
+- Scheduler for blink, random idle, and inactivity events.
+- SH1106 renderer implementing the display abstraction.
+- Page manager plus eyes, clock, weather, thought, animation, and system pages.
+- GPIO touch handling for single tap, double tap, and 4-second long press.
+- GPIO presence handling.
+- WiFi setup portal and LittleFS-backed JSON configuration.
+- Open-Meteo weather fetch.
+- NTP time setup and Arduino OTA service.
+- Single NeoPixel/WS2812 RGB status engine.
+
+Still to harden on hardware:
+
+- Validate each default GPIO against the exact ESP32-C3 board variant.
+- Tune touch thresholds if a raw capacitive pad is used instead of a TTP223 digital module.
+- Add display dirty-region optimization after the first hardware smoke test.
+- Add formal host-side tests for core modules.
+- Add OTA authentication before using updates on an untrusted network.

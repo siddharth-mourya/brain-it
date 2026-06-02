@@ -1,0 +1,12 @@
+{
+  "ssid": "",
+  "password": "",
+  "city": "Desk",
+  "latitude": 28.6139,
+  "longitude": 77.2090,
+  "timezone": "IST-5:30",
+  "sleepStartHour": 23,
+  "sleepEndHour": 7,
+  "brightness": 180,
+  "personality": "friendly"
+}

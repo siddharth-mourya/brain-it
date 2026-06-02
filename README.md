@@ -2,7 +2,7 @@
 
 DeskBot is a small desktop companion built around an ESP-class microcontroller, a compact display, touch input, presence detection, weather/time data, and personality-driven animations.
 
-This repository is intentionally plain Markdown. It does not contain a website framework, build system, package manager setup, or generated documentation app.
+This repository now contains the consolidated Markdown knowledge base plus an ESP32-C3 firmware implementation under `src/`. It intentionally does not contain a website framework, package manager setup, or generated documentation app.
 
 > **Inferred from source material:** The same concept appeared in the original notes as **Expression Bot**, **RobotBuddy**, and **DeskBot**. These documents use **DeskBot** as the canonical project name and treat the other names as earlier working names.
 
@@ -15,6 +15,7 @@ This repository is intentionally plain Markdown. It does not contain a website f
 | [`firmware.md`](firmware.md) | Firmware module responsibilities, target project structure, renderer/page model, and prototype migration notes. |
 | [`hardware.md`](hardware.md) | Hardware recommendations, display/sensor choices, BOM, power constraints, and pricing placeholders. |
 | [`roadmap.md`](roadmap.md) | Phased implementation plan, testing strategy, future plugins, and known documentation gaps. |
+| [`README-firmware.md`](README-firmware.md) | PlatformIO firmware quick start, pin map, runtime behavior, and configuration file notes. |
 
 ## V1 scope summary
 
@@ -63,6 +64,5 @@ This repo is not currently:
 
 - A deployable documentation website.
 - A Next.js/Nextra project.
-- A firmware implementation.
 - A validated production BOM.
 - A final schematic or PCB package.
