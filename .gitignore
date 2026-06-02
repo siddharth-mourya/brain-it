@@ -2,6 +2,7 @@ node_modules/
 .next/
 out/
 .vercel/
+.pio/
 .DS_Store
 npm-debug.log*
 .env*.local
