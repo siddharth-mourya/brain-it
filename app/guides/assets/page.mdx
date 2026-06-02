@@ -1,0 +1,41 @@
+# Assets & Animations
+
+DeskBot's personality depends heavily on animation quality. Treat assets as a first-class subsystem.
+
+## Asset categories
+
+| Category | Examples |
+| --- | --- |
+| Expressions | Happy eyes, sleepy eyes, wink, angry eyes |
+| Transitions | Wake up, fall asleep, touch reaction |
+| UI icons | WiFi, battery, weather, system state |
+| RGB profiles | Breathing, pulse, error flash, soft idle glow |
+| Frame packs | GIF-like loops or compressed frame sequences |
+
+## Animation metadata
+
+Each animation should have metadata so the resolver can make safe choices.
+
+```json
+{
+  "id": "idle_soft_blink",
+  "fps": 12,
+  "loop": true,
+  "interruptible": true,
+  "priority": 20,
+  "moods": ["happy", "idle"],
+  "frames": ["000.bin", "001.bin", "002.bin"]
+}
+```
+
+## Frame playback rules
+
+- Idle animations should be interruptible.
+- OTA/update animations should not be interrupted by normal user input.
+- Touch reactions should return to the prior page or idle state.
+- Missing assets should degrade to a safe built-in expression.
+- Frame buffers should be sized for the display and memory budget.
+
+## Known gaps
+
+The original files did not define a final asset format. Before production, choose between raw monochrome bitmaps, run-length encoding, compressed binary frames, or display-specific packed formats.

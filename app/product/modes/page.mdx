@@ -1,0 +1,52 @@
+# Modes & Interactions
+
+DeskBot uses a small set of core modes and maps simple inputs to page navigation, system states, and personality reactions.
+
+## Interaction model
+
+| Action | Result | Rationale |
+| --- | --- | --- |
+| Single tap | Next page | Primary navigation action |
+| Double tap | Previous page | Secondary navigation without extra buttons |
+| Long press, 4 seconds | System page | Harder to trigger accidentally than shorter holds |
+| Presence detected | Wake animation | Makes the bot acknowledge the user |
+| No presence for 5 minutes | Sleep mode | Saves power and reinforces personality |
+
+> **Design decision:** V1 should not include knobs, multiple buttons, nested menus, or complex gestures. Those increase support cost and make the product feel like a gadget menu instead of a companion.
+
+## Core modes
+
+| Mode | Purpose | Key data |
+| --- | --- | --- |
+| Robot Eyes | Default emotional surface | Mood, animation, blink timing |
+| Weather | Local weather dashboard | City, time, date, weather icon, temperature, wind speed |
+| Thought | Ambient short phrase | Local or remote thought string |
+| GIF / Animation | Playful media viewer | Stored frame pack or GIF-like sequence |
+| System | Health and diagnostics | WiFi, uptime, heap, IP, update state |
+
+## Optional plugin modes
+
+These ideas are useful but should remain outside V1 until the core platform is stable:
+
+- News by city or topic.
+- Stock watchlist for up to five symbols.
+- Daily horoscope by zodiac sign.
+- Auto-play mini-game.
+- YouTube / Instagram counters.
+- Cricket match score.
+- Connected-bot messaging.
+
+## Priority model
+
+Not all modes are equal. A WiFi error or OTA update must override a decorative page.
+
+| Priority | Category | Examples |
+| ---: | --- | --- |
+| 100 | OTA / critical update | Firmware flashing, reboot required |
+| 90 | Pairing | Captive portal active, waiting for WiFi |
+| 80 | Error | WiFi failed, low memory, asset missing |
+| 70 | User interaction | Touch reaction, page change |
+| 60 | Network | Config updated, reconnecting |
+| 50 | Mood | Happy, sleepy, annoyed |
+| 20 | Idle | Blinking, soft idle animations |
+| 10 | Sleep | Display dim/off, slow breathing LED |

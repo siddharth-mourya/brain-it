@@ -1,0 +1,58 @@
+# Design Decisions
+
+This page records the major architectural decisions inferred from the source material and clarifies tradeoffs.
+
+## ADR-001: Use renderer abstraction
+
+**Decision:** Pages must never call display-driver APIs directly.
+
+Use:
+
+```cpp
+renderer.drawText(...);
+renderer.drawBitmap(...);
+renderer.drawCircle(...);
+```
+
+Avoid direct use in pages:
+
+- `Adafruit_SH110X`
+- `TFT_eSPI`
+- `U8G2`
+- `LovyanGFX`
+
+**Why:** The project already considers both square OLED and round TFT displays. A renderer interface allows the same page code to run on SH1106, GC9A01, ST77916, or future displays.
+
+**Tradeoff:** Renderer abstraction adds upfront interface work and can hide display-specific optimizations. Keep low-level optimization in renderer implementations, not pages.
+
+## ADR-002: V1 uses a small page set
+
+**Decision:** V1 includes robot eyes, clock/date, weather, thought, GIF/animation viewer, system page, WiFi configuration portal, and OTA.
+
+**Why:** The original idea list contains many plugins. Shipping all of them at once would delay the core architecture and increase API complexity.
+
+**Tradeoff:** Users may ask for news, stock, horoscope, and sports sooner. The plugin interface should make those easy to add later.
+
+## ADR-003: Event bus separates modules
+
+**Decision:** Inputs, network events, timers, and sensors emit events. They do not call animation or rendering systems directly.
+
+**Why:** Embedded UI code becomes difficult to debug when each module controls the display. Events provide a stable seam for testing and state transitions.
+
+## ADR-004: Personality state outranks dashboard content
+
+**Decision:** The display should reflect the bot's state first and information second.
+
+**Why:** Product differentiation comes from the feeling of a living companion. Weather and time can be rendered in a personality-aware way.
+
+## ADR-005: ESP32-C3 is the target, ESP8266 is a prototype reference
+
+**Decision:** Use ESP32-C3 for V1 architecture and treat the ESP8266 NodeMCU code as a reference sketch.
+
+**Why:** Planning notes selected ESP32-C3, while prototype code was written for ESP8266. ESP32-C3 gives a better path for product features such as BLE-assisted provisioning, OTA, and modern ESP-IDF/Arduino support.
+
+## ADR-006: Long press is 4 seconds
+
+**Decision:** The product interaction spec uses a 4-second long press to open the system page.
+
+**Why:** Prototype code used 1.5 seconds, which is convenient for testing but more likely to trigger accidentally. Product behavior favors reliability.
