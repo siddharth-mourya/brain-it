@@ -1,0 +1,48 @@
+# Testing Strategy
+
+DeskBot needs both firmware tests and hardware validation because timing, sensors, WiFi, and display output interact.
+
+## Firmware unit tests
+
+Test these modules without hardware where possible:
+
+| Module | Test cases |
+| --- | --- |
+| Event bus | Subscribe, emit, dispatch order, queue overflow |
+| State machine | Touch transitions, sleep/wake transitions, error recovery |
+| Mood engine | Happiness/energy changes, saturation limits |
+| Scheduler | Blink ranges, inactivity timeout, reconnect interval |
+| Config manager | Defaults, invalid JSON, missing fields, save/load roundtrip |
+| Weather service | Code decoding, API error handling |
+
+## Hardware validation checklist
+
+- Display initializes reliably after reset.
+- Touch input is debounced and does not false-trigger during boot.
+- Presence sensor does not keep the device awake forever in a noisy environment.
+- WiFi reconnect does not block frame rendering.
+- Sleep mode actually lowers current draw.
+- Low battery or charger state is reflected safely if supported.
+- OTA rollback path works before enabling automatic updates.
+
+## Performance checks
+
+| Metric | Target |
+| --- | --- |
+| Main loop | Non-blocking; visual target around 30 FPS |
+| Touch response | Feels immediate, ideally under 100 ms |
+| WiFi reconnect | Runs in background without freezing animations |
+| Asset load | No visible flicker or long blank screen |
+| Heap | No steady leak during page cycling |
+
+## Manual acceptance tests
+
+1. Fresh device enters pairing/config mode.
+2. Configured device boots into eyes/idle mode.
+3. Single tap advances pages.
+4. Double tap goes back.
+5. Long press opens system page.
+6. Presence wakes the bot.
+7. No presence triggers sleep.
+8. Weather updates modify the display and may influence mood.
+9. WiFi failure shows an error state without crashing.
