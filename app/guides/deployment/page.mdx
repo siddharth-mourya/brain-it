@@ -1,0 +1,86 @@
+# Deploy on Vercel
+
+DeskBot Docs is a standard Next.js + Nextra site. Vercel can deploy it directly from the Git repository.
+
+## Quick deployment steps
+
+1. Push the repository to GitHub, GitLab, or Bitbucket.
+2. In Vercel, choose **Add New → Project**.
+3. Import the repository.
+4. Keep the framework preset as **Next.js**.
+5. Use these project settings:
+
+| Setting | Value |
+| --- | --- |
+| Root Directory | Repository root |
+| Install Command | `npm install` |
+| Build Command | `npm run build` or `npm run vercel-build` |
+| Output Directory | Leave empty / Vercel default |
+| Node.js Version | 20.x or newer |
+
+6. Click **Deploy**.
+
+## Fix for the Nextra config validation error
+
+If Vercel shows this error:
+
+```text
+[nextra] Error validating nextraConfig
+Invalid input: expected object, received undefined
+```
+
+it means Nextra received `undefined` as its plugin configuration. The fix is to pass an explicit object to `nextra` in `next.config.mjs`:
+
+```js
+import nextra from 'nextra'
+
+const withNextra = nextra({})
+
+const nextConfig = {}
+
+export default withNextra(nextConfig)
+```
+
+This repository now uses that pattern.
+
+## Recommended Vercel settings
+
+### Build and install commands
+
+Use the default npm workflow:
+
+```text
+npm install
+npm run build
+```
+
+The repository also includes a `vercel-build` script so Vercel can run the same build explicitly if needed.
+
+### Environment variables
+
+No environment variables are required for the current documentation-only site.
+
+### Static export
+
+Do not enable static export unless you specifically need a standalone `out/` folder for non-Vercel hosting. Vercel deploys the Next.js build output automatically.
+
+## Troubleshooting checklist
+
+| Symptom | Likely cause | Fix |
+| --- | --- | --- |
+| `Invalid input: expected object, received undefined` | `nextra()` was called without a config object | Use `nextra({})` |
+| `next: not found` | Dependencies were not installed | Confirm Vercel install command is `npm install` |
+| Build works locally but not on Vercel | Node version mismatch | Set Vercel Node.js version to 20.x or newer |
+| Old error remains after fix | Cached build | Redeploy with **Clear Build Cache** |
+| MDX pages not found | Wrong root directory | Set Root Directory to repository root |
+
+## Local verification before deploying
+
+Run these commands before pushing:
+
+```bash
+npm install
+npm run build
+```
+
+If both commands pass locally, Vercel should build the site with the same commands.
