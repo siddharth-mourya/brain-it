@@ -1,0 +1,55 @@
+# Roadmap
+
+## V1: Stable companion foundation
+
+| Workstream | Deliverables |
+| --- | --- |
+| Firmware skeleton | Event bus, state machine, scheduler, renderer, page manager |
+| Core pages | Eyes, weather, thought, system, animation viewer |
+| Provisioning | WiFi setup portal, local config persistence |
+| Display | SH1106 renderer and display-independent page code |
+| Personality | Mood engine, animation resolver, blink/idle scheduling |
+| Networking | WiFi manager, weather fetch, NTP, OTA scaffolding |
+| Hardware | ESP32-C3 + display + touch + presence + RGB prototype |
+
+## V1.1: Polish and reliability
+
+- Improve animation assets.
+- Add partial redraw/dirty rectangle optimizations.
+- Add memory and FPS diagnostics.
+- Harden config validation and factory reset.
+- Add OTA checksum/rollback documentation and tests.
+- Add battery and charger-state reporting if hardware supports it.
+
+## V2: Plugin ecosystem
+
+Plugin candidates:
+
+- News page.
+- Stock watchlist.
+- Horoscope.
+- Cricket score.
+- Social counters.
+- Meme/photo page.
+- Auto-play mini-game.
+- Connected-bot messaging.
+
+## V3: Productization
+
+- Custom PCB.
+- Enclosure design.
+- Production provisioning flow.
+- Secure device identity and ownership transfer.
+- Cloud dashboard or fleet management.
+- Manufacturing test firmware.
+- Procurement-verified BOM.
+
+## Open questions
+
+| Question | Why it matters |
+| --- | --- |
+| Final display for launch? | Defines renderer complexity, BOM, and enclosure |
+| Asset format? | Determines flash use, frame quality, and CPU cost |
+| Cloud backend required for V1? | Affects device tokens, pairing, and OTA model |
+| Battery runtime target? | Drives display brightness, sleep behavior, and sensor choice |
+| Presence sensor choice? | Affects cost, false positives, and user experience |

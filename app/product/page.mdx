@@ -1,0 +1,54 @@
+# Product Brief
+
+DeskBot is a personality-first IoT desk companion. It combines useful information screens with expressive behavior so the device feels present, reactive, and playful.
+
+## Why this exists
+
+Most small maker displays become a sequence of static dashboards. DeskBot intentionally reverses that priority:
+
+1. **Emotion first** — the bot should feel alive.
+2. **Information second** — weather, time, and other content should appear through a personality layer.
+3. **Plugins later** — avoid overloading V1 with too many dashboards.
+
+## Target users
+
+| User | Needs |
+| --- | --- |
+| Makers | A modular ESP-based firmware architecture they can extend |
+| Desk workers | Ambient time/weather/status without opening a phone |
+| Hobby product builders | A low-cost BOM with clear upgrade paths |
+| Developers | A plugin-style page model and clean module boundaries |
+
+## Product principles
+
+- **Simple interaction:** one touch surface and presence detection; no menu trees.
+- **Small-device friendly:** protect RAM, flash, frame timing, and battery budget.
+- **Renderer independence:** pages should not know whether the display is OLED, TFT, round, or square.
+- **Event-driven firmware:** hardware input should emit events, not directly manipulate animations.
+- **Composable pages:** weather, thoughts, system status, and future plugins follow the same page interface.
+
+## Canonical V1 feature set
+
+| Feature | Included in V1? | Notes |
+| --- | --- | --- |
+| Robot eyes | Yes | Core personality surface |
+| Clock and date | Yes | Uses NTP when WiFi is available |
+| Weather | Yes | Prototype uses Open-Meteo current weather |
+| Thought of the day | Yes | Local random thoughts initially |
+| GIF / animation viewer | Yes | Frame animation support; exact format TBD |
+| System page | Yes | Shown on boot, WiFi changes, and long press |
+| WiFi configuration portal | Yes | Local portal during setup or config changes |
+| OTA updates | Yes | Architecture-required; implementation can arrive after skeleton |
+| News, stocks, horoscope, cricket, social stats | Later | Plugin candidates, not V1 core |
+| Messaging connected bots | Later | Requires backend and pairing model |
+
+## Commercial target
+
+The source notes estimate a low-cost consumer build using Indian component pricing. Approximate selling-price targets are:
+
+| Variant | Estimated component + misc cost | Target selling price |
+| --- | ---: | ---: |
+| Square LED/OLED build | ₹1,600 | ₹1,800–₹2,000 |
+| Round display build | ₹1,700 | ₹2,200 |
+
+> **Known limitation:** prices in the source notes were not verified during this documentation pass and should be treated as procurement placeholders, not a validated BOM quote.
